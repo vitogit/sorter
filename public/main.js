@@ -170,7 +170,6 @@ var App = function() {
             class: 'file_link',
             'data-id': file.id,
             'data-name': file.name,
-            onclick: 'load("'+file.id+'")',
             text: file.name
         }).appendTo(li);
         $('#fileFinder ol').append(li)
