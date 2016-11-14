@@ -1,0 +1,32 @@
+{
+  "name": "Sorter",
+  "version": "1.0.0",
+  "description": "Sorter is a webapp to organize ideas, tasks and information using bullet points and hashtags.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js -e js,html",
+    "test": "./node_modules/mocha/bin/mocha tests"
+  },
+  "dependencies": {
+    "express": "^4.14.0"  
+  },  
+  "repository": {
+    "type": "git",
+    "url": ""
+  },  
+  "engines": {
+    "node": "6.4.x",
+    "npm": "3.10.x"
+  },  
+  "keywords": [
+    "google drive api v3",
+    "Javascript",
+    "Sorter",
+    "Javascript",
+    "organize",
+    "webapp"
+  ],
+  "author": "vitogit",
+  "license": "MIT"
+}
