@@ -3,26 +3,26 @@
 
   <head>
     <title>Sorter: Ideas and task organizer</title>
-    
+
     <script src="lib/login.service.js"></script>
-    <script src="lib/drive.service.js"></script>    
+    <script src="lib/drive.service.js"></script>
     <script data-require="jquery@*" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="simplex.bootstrap.min.css">    
-    <link rel="stylesheet" href="style.css">    
+    <link rel="stylesheet" href="simplex.bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
-    
+
     <div class="not_authenticated">
       <p>Please sign-in with your Google account to continue.</p>
-      <button onclick="login()">Sign-in</button>
+      <button onclick="signIn()">Sign-in</button>
     </div>
-      
+
     <div id="container" class="container authenticated">
       <div id="container-header">
-        <h1>Sorter</h1>
+        <h1>Sorter</h1> <span><i id="useremail"></i> - <a href="#"onclick="signOut()">Sign-Out</a></span>
       </div>
       <div class="row">
         <div id="menu" class="col-sm-2 menu">
@@ -76,71 +76,62 @@
         </div>
         <div class="panel-body">
           <ol></ol>
-        </div>        
+        </div>
       </div>
     </div>
-    
+
     <script>
-    
-      var SCOPES = ['https://www.googleapis.com/auth/drive.file']
+      var SCOPES = 'https://www.googleapis.com/auth/drive.file';
+      var DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
       var CLIENT_ID = '';
-      window.loginService = new LoginService(CLIENT_ID, SCOPES);
+      window.loginService = new LoginService(CLIENT_ID, SCOPES, DISCOVERY_DOCS);
       window.driveService = new DriveService();
 
       //load the app, api , utils
       app = new App();
-      util = new Util();   
-      app.init()     
+      util = new Util();
+      app.init()
 
-      function init_gapi() {
-        gapi.client.load('drive' , 'v3');
-        auth();
-      } 
-      
-      function auth() {
-        if (gapi && gapi.auth) {
-          window.loginService.checkAuth(function(err, response){
-            if (err){
-              console.log('show login dialog')
-              not_auth();
-            } else {
-              console.log('is logged in')
-              is_auth();
-              app.listNotes() //todo move this to a better place.
-            }
-          })
+      //Try to automactically signin
+      function initClient() {
+        //We pass a callback function to initClient, that return true/false if user is signin/signoff
+        window.loginService.initClient(updateSigninStatus)
+      }
+
+      function initGapi() {
+        gapi.load('client:auth2', initClient);
+      }
+
+      function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+          var useremail = window.loginService.userProfile().getEmail();
+          is_auth(useremail)
+          app.listNotes() //todo move this to a better place.
         } else {
-          setTimeout(auth, 10); //just in case the gapi lib is not loaded, we call it again
+          not_auth();
         }
       }
-      
-      function login() {
-        loginService.login(function(err, response){
-          if (err){
-            console.log('Login error')
-            not_auth();
-          } else {
-            console.log('Login ok')
-            is_auth();
-          }
-        })
-      }                 
-      //Just jquery stuff to hide, show divs
-      $( document ).ready(function() {
-        $('.not_authenticated').hide();
-        $('.authenticated').hide();
-      });
 
-      function is_auth() {
+      function signIn() {
+        window.loginService.signIn();
+      }
+
+      function signOut() {
+        window.loginService.signOut();
+      }
+
+      //Just jquery stuff to hide, show divs
+      function is_auth(useremail) {
         $('.not_authenticated').hide();
         $('.authenticated').show();
+        $('#useremail').html(useremail);
       }
 
       function not_auth() {
         $('.not_authenticated').show();
         $('.authenticated').hide();
-      }       
+      }
     </script>
-    <script src="https://apis.google.com/js/client.js?onload=init_gapi"></script>
+    <script src="https://apis.google.com/js/api.js?onload=initGapi"></script>
   </body>
 </html>

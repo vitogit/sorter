@@ -1,16 +1,16 @@
 var App = function() {
 
   var self = this
-  
-  this.tinyDom;  
-  
+
+  this.tinyDom;
+
   this.init = function() {
     $('.bookmark_link').click(function(){
       var hashtag = $(this).text()
-      $('#filter_box').val(hashtag)  
-      $('#filter_box').trigger("input")  
-    })  
-    
+      $('#filter_box').val(hashtag)
+      $('#filter_box').trigger("input")
+    })
+
     $('#container').on('click', '.file_link', function(){
       var fileId = $(this).data('id');
       app.loadNotes(fileId);
@@ -23,14 +23,14 @@ var App = function() {
 
     $('#container').on('click', '.filter_link', function(){
       var hashtag =  '#'+$(this).data('name')
-      $('#filter_box').val(hashtag)  
-      $('#filter_box').trigger("input") 
+      $('#filter_box').val(hashtag)
+      $('#filter_box').trigger("input")
     })
 
     $(this.tinyDom).on('click', '.hash_link', function(){
       var hashtag =  '#'+$(this).data('name')
-      $('#filter_box').val(hashtag)  
-      $('#filter_box').trigger("input") 
+      $('#filter_box').val(hashtag)
+      $('#filter_box').trigger("input")
     })
 
     tinymce.init({
@@ -38,7 +38,7 @@ var App = function() {
       height: '600px',
       statusbar: false,
       menubar:false,
-      content_css : 'simplex.bootstrap.min.css, style.css',    
+      content_css : 'simplex.bootstrap.min.css, style.css',
       plugins: [
         'autolink lists link save'
       ],
@@ -50,7 +50,6 @@ var App = function() {
           this.getDoc().body.style.fontSize = '14px';
           app.tinyDom = tinyMCE.activeEditor.dom.getRoot()
         });
-    
       }
     });
   }
@@ -58,7 +57,7 @@ var App = function() {
   this.filter = function() {
     var current_text = $('#filter_box').val()
     var hashtags = current_text.replace(/  +/g, ' ').split(' ')
-    hashtags = hashtags.filter(function(h){ return h != "" }); 
+    hashtags = hashtags.filter(function(h){ return h != "" });
     $(this.tinyDom).find('li').hide()
     $(this.tinyDom).find('li').each(function() {
       var li_text = $(this).clone().children('ul').remove().end().html();
@@ -67,10 +66,10 @@ var App = function() {
         $(this).show()
         $(this).parents().show()
         $(this).find('li').show()
-      } 
+      }
     })
   }
-  
+
   this.parseHashtags = function() {
     var initText = $(this.tinyDom).html()
     var parsedText = initText.replace( /#(\w+)\b(?!<\/a>)/g ,'<a class="hash_link" data-name="$1" href="#">#$1</a>')
@@ -79,7 +78,7 @@ var App = function() {
     this.extractHashtags();
     console.log('parsedhashtags')
   }
-  
+
   this.parseSmartTags = function(initText) {
     return initText.replace(/\$(\w+)\b(?!<\/a>)/g, function (match, smartTag) {
       var newLink = $("<a />", {
@@ -88,20 +87,20 @@ var App = function() {
           'data-name': smartTag,
           text : '$'+smartTag
       })
-      
+
       if (smartTag == 'todo') {
         newLink.addClass('todo bg-warning')
           console.log('todo tag')
-      } else if (smartTag == 'completed') { 
+      } else if (smartTag == 'completed') {
         newLink.addClass('completed bg-success')
         console.log('journal tag')
-      } else if (smartTag == 'journal') { 
+      } else if (smartTag == 'journal') {
         newLink.addClass('journal bg-info')
-        console.log('journal tag')        
+        console.log('journal tag')
       } else {
-        
+
       }
-      return newLink.prop('outerHTML');      
+      return newLink.prop('outerHTML');
     });
   }
 
@@ -127,7 +126,7 @@ var App = function() {
 
       $('#allTags').append(newLink).append('<br/>')
     });
-  } 
+  }
 
   //variable to reference the file id that we are modified, used when updated it
   this.current_file = {
@@ -135,7 +134,7 @@ var App = function() {
       id:null,
       name: 'sorter_notes'
   };
-  
+
   this.saveNotes = function() {
     this.current_file.content = $(this.tinyDom).html()
     driveService.saveFile(self.current_file, function(file){
@@ -180,19 +179,18 @@ var App = function() {
           self.loadNotes(self.current_file.id)
       }
     })
-  }  
-  
+  }
+
   this.applyStyles = function() {
-    $(this.tinyDom).find('a.smartTag').each(function() {      
+    $(this.tinyDom).find('a.smartTag').each(function() {
       var classes = $(this).prop('class')
       $(this).parent().addClass(classes);
-    })    
+    })
   }
 };
-
 
 var Util = function() {
   this.formatDate = function(date) {
     return date.split('.')[0].replace('T', ' ').replace(/-/g,'/')
-  }  
+  }
 }

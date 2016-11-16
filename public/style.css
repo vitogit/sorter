@@ -1,3 +1,11 @@
 #container-header h1 {
   margin: 20px 0px;
+  display: inline-block;
+}
+#container-header span {
+  margin-left: 70%;
+}
+
+.not_authenticated, .authenticated {
+  display: none;
 }
