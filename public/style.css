@@ -9,3 +9,9 @@
 .not_authenticated, .authenticated {
   display: none;
 }
+
+@media (min-width: 1200px) {
+  .container {
+      width: 80%;
+  }
+}

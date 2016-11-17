@@ -35,12 +35,13 @@ var App = function() {
 
     tinymce.init({
       selector: '#editor',
-      height: '600px',
+      width: '100%',
+      height: '100%',
       statusbar: false,
       menubar:false,
       content_css : 'simplex.bootstrap.min.css, style.css',
       plugins: [
-        'autolink lists link save'
+        'autolink lists link save autoresize'
       ],
       save_enablewhendirty: true,
       save_onsavecallback: function () { app.parseHashtags(); app.applyStyles(); app.saveNotes(); },
