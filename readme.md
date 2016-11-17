@@ -4,7 +4,7 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 
 ## How it works
 
-#### Write your notes following a hierarchy with the bullets points. 
+#### Write your notes following a hierarchy with bullets points. 
 - House 
   - buy bread and milk
   - fix table 
@@ -16,7 +16,7 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
   - buy 2 bags
 
 #### Sync your info with Google Drive.
- Click the save button and it will create a new document in your google drive called: sorter_notes. IT will be loaded automatically when the app start.
+ Click the save button and it will create a new document in your google drive called: sorter_notes. It will be loaded automatically when the app start.
  It uses my library gSyncDrive for sync with Google Drive Api v3 https://github.com/vitogit/gDriveSync.js 
 
 
@@ -31,6 +31,17 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
   - buy tickets
   - buy 2 bags
 
+#### Default hashtags
+
+- read-later: something that you want to read later
+- bookmark: articles or internet links
+- tip: something intersting that you found
+- goal: maybe a long term goal with a lot of actions and sub goals
+- action: something that you have to do, some task, call, etc
+- idea: ideas to develop in the future
+- p1, p2, p3: add priority to your tasks so then you can filter important tasks
+
+
 #### Filter by hashtags or words to just focus on what you need
 
 ##### SmartTags: they are a special kind of hashtag with buildin functionality:
@@ -41,5 +52,4 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
  
 ##### You can choose between different views. [not implemented yet]
 - Tasks:
-- Journal: 
--
+- Journal:
