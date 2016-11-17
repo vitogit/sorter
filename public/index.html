@@ -9,6 +9,7 @@
     <script data-require="jquery@*" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="main.js"></script>
+    <script src="config.js"></script>
     <link rel="stylesheet" href="simplex.bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -83,10 +84,8 @@
     </div>
 
     <script>
-      var SCOPES = 'https://www.googleapis.com/auth/drive.file';
-      var DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
-      var CLIENT_ID = '';
-      window.loginService = new LoginService(CLIENT_ID, SCOPES, DISCOVERY_DOCS);
+
+      window.loginService = new LoginService(config.CLIENT_ID, config.SCOPES, config.DISCOVERY_DOCS);
       window.driveService = new DriveService();
 
       //load the app, api , utils
