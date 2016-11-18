@@ -6,6 +6,11 @@
   margin-left: 70%;
 }
 
+#allTags {
+  height: 200px;
+  overflow: auto;
+}
+
 .not_authenticated, .authenticated {
   display: none;
 }

@@ -31,6 +31,10 @@ var App = function() {
       $('#filter_box').trigger("input")
     })
 
+    $('#container').on('click', '.hideThisTag', function(){
+      app.filter();
+    })
+    
     $(this.tinyDom).on('click', '.hash_link', function(){
       var hashtag =  '#'+$(this).data('name')
       $('#filter_box').val(hashtag)
@@ -63,6 +67,12 @@ var App = function() {
     var current_text = $('#filter_box').val()
     var hashtags = current_text.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
     hashtags = hashtags.filter(function(h){ return h != "" });
+
+    var tagsToHide = $('.hideThisTag:checked').map(function() {
+                        return $(this).val().replace(/\$/g, '\\$');
+                     }).get();
+    tagsToHide = tagsToHide.filter(function(h){ return h != "" });
+
     $(this.tinyDom).find('li').hide()
     $(this.tinyDom).find('li').each(function() {
       var li_text = $(this).clone().children('ul').remove().end().html();
@@ -72,6 +82,11 @@ var App = function() {
         $(this).parents().show()
         $(this).find('li').show()
       }
+      
+      if (tagsToHide.length && new RegExp(tagsToHide.join("|")).test(li_text)) {
+        $(this).hide()
+        $(this).find('li').hide()
+      }      
     })
   }
 
@@ -168,7 +183,7 @@ var App = function() {
       self.current_file = file;
       $(self.tinyDom).html(file.content);
       self.extractAllTags();
-
+      self.filter();
     })
   }
 
