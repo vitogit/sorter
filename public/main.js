@@ -25,7 +25,8 @@ var App = function() {
     })
 
     $('#container').on('click', '.filter_link', function(){
-      var hashtag =  '#'+$(this).data('name')
+      var type = $(this).text()[0];
+      var hashtag =  type+$(this).data('name')
       $('#filter_box').val(hashtag)
       $('#filter_box').trigger("input")
     })
@@ -79,7 +80,7 @@ var App = function() {
     var parsedText = initText.replace( /#(\w+)\b(?!<\/a>)/g ,'<a class="hash_link" data-name="$1" href="#">#$1</a>')
     parsedText = this.parseSmartTags(parsedText);
     $(this.tinyDom).html(parsedText);
-    this.extractHashtags();
+    this.extractAllTags();
   }
 
   this.parseSmartTags = function(initText) {
@@ -104,10 +105,9 @@ var App = function() {
     });
   }
 
-  this.extractHashtags = function() {
-    $('#allTags').html("")
+  this.extractTags = function(class_name, type) {
     var tagMap = {}
-    $(this.tinyDom).find('.hash_link').each(function(){
+    $(this.tinyDom).find('a.'+class_name).each(function(){
       var name = $(this).data('name')
       if (tagMap[name]) {
         tagMap[name] = tagMap[name]+1
@@ -115,18 +115,29 @@ var App = function() {
         tagMap[name] = 1
       }
     })
+    
+    var tagMapSorted = {};
+    Object.keys(tagMap).sort().forEach(function(key) {
+      tagMapSorted[key] = tagMap[key];
+    });    
 
-    $.each(tagMap, function( name, count ) {
+    $.each(tagMapSorted, function( name, count ) {
       var newLink = $("<a />", {
           'data-name': name,
           href : "#",
-          text : '#'+name+"("+count+")",
+          text : type+name+"("+count+")",
           class: 'filter_link'
       });
 
       $('#allTags').append(newLink).append('<br/>')
     });
   }
+
+  this.extractAllTags = function() {
+    $('#allTags').html("")
+    this.extractTags('smartTag','$');
+    this.extractTags('hash_link','#');
+  }  
 
   //variable to reference the file id that we are modified, used when updated it
   this.current_file = {
@@ -156,7 +167,8 @@ var App = function() {
     window.driveService.loadFile(file, function(file){
       self.current_file = file;
       $(self.tinyDom).html(file.content);
-      self.extractHashtags()
+      self.extractAllTags();
+
     })
   }
 
