@@ -60,7 +60,7 @@ var App = function() {
 
   this.filter = function() {
     var current_text = $('#filter_box').val()
-    var hashtags = current_text.replace(/  +/g, ' ').split(' ')
+    var hashtags = current_text.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
     hashtags = hashtags.filter(function(h){ return h != "" });
     $(this.tinyDom).find('li').hide()
     $(this.tinyDom).find('li').each(function() {
@@ -93,13 +93,10 @@ var App = function() {
 
       if (smartTag == 'todo') {
         newLink.addClass('todo bg-warning')
-          console.log('todo tag')
       } else if (smartTag == 'completed') {
         newLink.addClass('completed bg-success')
-        console.log('journal tag')
       } else if (smartTag == 'journal') {
         newLink.addClass('journal bg-info')
-        console.log('journal tag')
       } else {
 
       }
