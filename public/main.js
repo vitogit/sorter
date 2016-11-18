@@ -91,11 +91,11 @@ var App = function() {
           'data-name': smartTag,
           text : '$'+smartTag
       })
-
-      if (smartTag == 'todo') {
-        newLink.addClass('todo bg-warning')
-      } else if (smartTag == 'completed') {
+     
+      if (smartTag == 'completed') {
         newLink.addClass('completed bg-success')
+      } else if (smartTag == 'todo') {
+        newLink.addClass('todo bg-warning')
       } else if (smartTag == 'journal') {
         newLink.addClass('journal bg-info')
       } else {
@@ -204,6 +204,7 @@ var App = function() {
   this.applyStyles = function() {
     $(this.tinyDom).find('a.smartTag').each(function() {
       var classes = $(this).prop('class')
+      $(this).parent().removeClass();
       $(this).parent().addClass(classes);
     })
   }
