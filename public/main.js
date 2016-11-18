@@ -5,6 +5,9 @@ var App = function() {
   this.tinyDom;
 
   this.init = function() {
+    
+
+      
     $('.bookmark_link').click(function(){
       var hashtag = $(this).text()
       $('#filter_box').val(hashtag)
@@ -44,7 +47,7 @@ var App = function() {
         'autolink lists link save autoresize'
       ],
       save_enablewhendirty: true,
-      save_onsavecallback: function () { app.parseHashtags(); app.applyStyles(); app.saveNotes(); },
+      save_onsavecallback: function () { app.saveBookmark(); app.parseHashtags(); app.applyStyles(); app.saveNotes(); app.loadBookmark(); },
       toolbar: 'bullist save removeformat',
       setup : function(ed){
         ed.on('init', function() {
@@ -77,7 +80,6 @@ var App = function() {
     parsedText = this.parseSmartTags(parsedText);
     $(this.tinyDom).html(parsedText);
     this.extractHashtags();
-    console.log('parsedhashtags')
   }
 
   this.parseSmartTags = function(initText) {
@@ -135,7 +137,15 @@ var App = function() {
       id:null,
       name: 'sorter_notes'
   };
-
+  
+  this.bookmark;
+  this.saveBookmark = function() {
+    this.bookmark = tinymce.activeEditor.selection.getBookmark(2,true);
+  }
+  this.loadBookmark = function() {
+    tinymce.activeEditor.selection.moveToBookmark(this.bookmark);
+  }
+  
   this.saveNotes = function() {
     this.current_file.content = $(this.tinyDom).html()
     driveService.saveFile(self.current_file, function(file){
