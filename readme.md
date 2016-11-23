@@ -5,10 +5,11 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 ## How it works
 
 #### Write your notes following a hierarchy with bullets points 
-![Sorter in action](http://i65.tinypic.com/123umps.png)
+![Sorter in action](http://i64.tinypic.com/2lk7lfk.png)
+
 
 #### Add hashtags to your notes and filter by hashtags or words to just focus on what you need
-![Sorter with tags](http://i66.tinypic.com/14u9raf.png)
+![Sorter with tags](http://i66.tinypic.com/2ccplbs.png)
 
 #### Sync your info with Google Drive.
  Click the save button and it will create a new document in your google drive called: sorter_notes. It will be loaded automatically when the app start.
