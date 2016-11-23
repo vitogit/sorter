@@ -4,32 +4,15 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 
 ## How it works
 
-#### Write your notes following a hierarchy with bullets points. 
-- House 
-  - buy bread and milk
-  - fix table 
-    - buy nails
-    - do the job
-- Trip to LA 
-  - check available dates
-  - buy tickets
-  - buy 2 bags
+#### Write your notes following a hierarchy with bullets points 
+![Sorter in action](http://i65.tinypic.com/123umps.png)
+
+#### Add hashtags to your notes and filter by hashtags or words to just focus on what you need
+![Sorter with tags](http://i66.tinypic.com/14u9raf.png)
 
 #### Sync your info with Google Drive.
  Click the save button and it will create a new document in your google drive called: sorter_notes. It will be loaded automatically when the app start.
  It uses my library gSyncDrive for sync with Google Drive Api v3 https://github.com/vitogit/gDriveSync.js 
-
-
-#### Add hashtags to your notes
-- House 
-  - buy bread and milk **#task**
-  - fix table **$todo**
-    - buy nails
-    - do the job
-- Trip to LA **#goal**
-  - check available dates
-  - buy tickets
-  - buy 2 bags
 
 #### Default hashtags
 
@@ -42,7 +25,6 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 - p1, p2, p3: add priority to your tasks so then you can filter important tasks
 
 
-#### Filter by hashtags or words to just focus on what you need
 
 ##### SmartTags: they are a special kind of hashtag with buildin functionality:
 - $todo : the note is painted yellow
