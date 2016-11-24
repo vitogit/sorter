@@ -3,7 +3,8 @@ var  expect = chai.expect
 describe('Sorter', function() {
   before(function() { 
     var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1</li><li> child2 #hash2 <ul> <li>grandchild1</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
-    $('body').append(editor)    
+    var allTags = $('<div id="allTags"></div>')
+    $('body').append(editor).append(allTags)    
     sorter = new Sorter('editor')
   }); 
 
@@ -34,7 +35,29 @@ describe('Sorter', function() {
   it('hide completed and search hashtags', function() {
     sorter.filter('#hash2', ['$completed']);
     expect(visibleRows()).to.be.eq(3) //root, child2 and 1 grandchild (hide one)
-  })       
+  })  
+  
+  it('parse the hashtags', function() {
+    $(sorter.editor).find('li').show()
+    sorter.parseHashtags();
+    var parsedCount = $('.hash_link').length
+    expect(parsedCount).to.be.eq(2) 
+  })  
+
+  it('parse the smartTags', function() {
+    $(sorter.editor).find('li').show()
+    sorter.parseSmartTags();
+    var parsedCount = $('.smartTag').length
+    expect(parsedCount).to.be.eq(1) 
+  })  
+  
+  it('extract all the tags', function() {
+    sorter.extractTags('smartTag','$');
+    sorter.extractTags('hash_link','#');
+    var tagsCount = $('#allTags a').length
+    expect(tagsCount).to.be.eq(3) 
+  })  
+     
   // it('mounts a hello tag with a setted name', function() {
   //   tag = riot.mount('hello', {name: 'Carl'})[0]
   //   expect(tag.name).to.be.eq('Carl')

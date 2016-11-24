@@ -35,13 +35,15 @@ var Sorter = function(editorId) {
   this.parseHashtags = function() {
     var initText = $(this.editor).html()
     var parsedText = initText.replace( /#(\w+)\b(?!<\/a>)/g ,'<a class="hash_link" data-name="$1" href="#">#$1</a>')
-    parsedText = this.parseSmartTags(parsedText);
+    //parsedText = this.parseSmartTags(parsedText);
     $(this.editor).html(parsedText);
-    this.extractAllTags();
+    //this.extractAllTags();
   }
 
-  this.parseSmartTags = function(initText) {
-    return initText.replace(/\$(\w+)\b(?!<\/a>)/g, function (match, smartTag) {
+  this.parseSmartTags = function() {
+    var initText = $(this.editor).html()
+    
+    var parsedText = initText.replace(/\$(\w+)\b(?!<\/a>)/g, function (match, smartTag) {
       var newLink = $("<a />", {
           href : "#",
           class : 'smartTag',
@@ -60,6 +62,8 @@ var Sorter = function(editorId) {
       }
       return newLink.prop('outerHTML');
     });
+    
+    $(this.editor).html(parsedText);
   }
 
   this.extractTags = function(class_name, type) {
