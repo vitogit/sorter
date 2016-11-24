@@ -64,10 +64,9 @@
               </div>
               <div class="panel-body">
                 <ul class="nav">
-                    <li class="active"><a href="javascript:;">Home Visual</a></li>
-                    <li><a href="javascript:;">Raw</a></li>
-                    <li class="nav-divider"></li>
-                    <li><a href="javascript:;">Journal</a></li>
+                    <li class="active"><a data-name="editorDiv" class="router" href="javascript:;">Home Visual</a></li>
+                    <li><a data-name="tasks" class="router" href="javascript:;">Tasks Planning</a></li>
+                    <li><a data-name="journal" class="router" href="javascript:;">Journal</a></li>
                 </ul>
               </div>
             </div>
@@ -78,7 +77,13 @@
             <input id="filter_box" type="text" class="form-control" placeholder="filter by tag" oninput="app.filter()">
           </div>
           <div id="main_notes">
-            <textarea id="editor"></textarea>
+            <div class ="visual" id="editorDiv">
+              <textarea  id="editor"></textarea>
+            </div>
+            <div class ="visual" id="tasks">
+            
+            </div>
+            <div class ="visual" id="journal">journal</div>
           </div>
         </div>
       </div>

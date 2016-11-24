@@ -35,6 +35,16 @@ var App = function() {
       app.filter();
     })
 
+    $('.router').click(function(){
+      var name = $(this).data('name');
+      $('.router').removeClass();
+      $(this).addClass('active');
+      
+      $('.visual').hide();
+      $("#"+name).show();
+    })
+    
+
 
     tinymce.init({
       selector: '#editor',
