@@ -1,5 +1,5 @@
 var Sorter = function(editorId) {
-  this.editor = '#'+editorId;
+  this.editor = editorId;
   
   //current_text: space separated string, by which will filter the elements 
   //tagsToHide: array of tags to hide

@@ -5,7 +5,7 @@ describe('Sorter', function() {
     var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1</li><li> child2 #hash2 <ul> <li>grandchild1</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
     var allTags = $('<div id="allTags"></div>')
     $('body').append(editor).append(allTags)    
-    sorter = new Sorter('editor')
+    sorter = new Sorter(editor)
   }); 
 
   it('exists', function() {

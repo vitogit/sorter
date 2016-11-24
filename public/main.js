@@ -1,13 +1,13 @@
 var App = function() {
 
   var self = this
-
+  
+  this.sorter;
+  
   this.tinyDom;
-
+  
   this.init = function() {
-    
 
-      
     $('.bookmark_link').click(function(){
       var hashtag = $(this).text()
       $('#filter_box').val(hashtag)
@@ -34,12 +34,7 @@ var App = function() {
     $('#container').on('click', '.hideThisTag', function(){
       app.filter();
     })
-    
-    $(this.tinyDom).on('click', '.hash_link', function(){
-      var hashtag =  '#'+$(this).data('name')
-      $('#filter_box').val(hashtag)
-      $('#filter_box').trigger("input")
-    })
+
 
     tinymce.init({
       selector: '#editor',
@@ -52,12 +47,18 @@ var App = function() {
         'autolink lists link save autoresize'
       ],
       save_enablewhendirty: true,
-      save_onsavecallback: function () { app.saveBookmark(); app.parseHashtags(); app.applyStyles(); app.saveNotes(); app.loadBookmark(); },
+      save_onsavecallback: function () { app.saveBookmark(); app.parseText(); app.applyStyles(); app.saveNotes(); app.loadBookmark(); },
       toolbar: 'bullist save removeformat',
       setup : function(ed){
         ed.on('init', function() {
           this.getDoc().body.style.fontSize = '14px';
           app.tinyDom = tinyMCE.activeEditor.dom.getRoot()
+          app.sorter = new Sorter(app.tinyDom);
+          $(app.tinyDom).on('click', '.hash_link', function(){
+            var hashtag =  '#'+$(this).data('name')
+            $('#filter_box').val(hashtag)
+            $('#filter_box').trigger("input")
+          })          
         });
       }
     });
@@ -65,93 +66,23 @@ var App = function() {
 
   this.filter = function() {
     var current_text = $('#filter_box').val()
-    var hashtags = current_text.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
-    hashtags = hashtags.filter(function(h){ return h != "" });
-
     var tagsToHide = $('.hideThisTag:checked').map(function() {
-                        return $(this).val().replace(/\$/g, '\\$');
+                        return $(this).val();
                      }).get();
     tagsToHide = tagsToHide.filter(function(h){ return h != "" });
-
-    $(this.tinyDom).find('li').hide()
-    $(this.tinyDom).find('li').each(function() {
-      var li_text = $(this).clone().children('ul').remove().end().html();
-      //filter using OR
-      if (new RegExp(hashtags.join("|")).test(li_text)) {
-        $(this).show()
-        $(this).parents().show()
-        $(this).find('li').show()
-      }
-      
-      if (tagsToHide.length && new RegExp(tagsToHide.join("|")).test(li_text)) {
-        $(this).hide()
-        $(this).find('li').hide()
-      }      
-    })
+    this.sorter.filter(current_text, tagsToHide);
   }
 
-  this.parseHashtags = function() {
-    var initText = $(this.tinyDom).html()
-    var parsedText = initText.replace( /#(\w+)\b(?!<\/a>)/g ,'<a class="hash_link" data-name="$1" href="#">#$1</a>')
-    parsedText = this.parseSmartTags(parsedText);
-    $(this.tinyDom).html(parsedText);
-    this.extractAllTags();
-  }
-
-  this.parseSmartTags = function(initText) {
-    return initText.replace(/\$(\w+)\b(?!<\/a>)/g, function (match, smartTag) {
-      var newLink = $("<a />", {
-          href : "#",
-          class : 'smartTag',
-          'data-name': smartTag,
-          text : '$'+smartTag
-      })
-     
-      if (smartTag == 'completed') {
-        newLink.addClass('completed bg-success')
-      } else if (smartTag == 'todo') {
-        newLink.addClass('todo bg-warning')
-      } else if (smartTag == 'journal') {
-        newLink.addClass('journal bg-info')
-      } else {
-
-      }
-      return newLink.prop('outerHTML');
-    });
-  }
-
-  this.extractTags = function(class_name, type) {
-    var tagMap = {}
-    $(this.tinyDom).find('a.'+class_name).each(function(){
-      var name = $(this).data('name')
-      if (tagMap[name]) {
-        tagMap[name] = tagMap[name]+1
-      } else {
-        tagMap[name] = 1
-      }
-    })
-    
-    var tagMapSorted = {};
-    Object.keys(tagMap).sort().forEach(function(key) {
-      tagMapSorted[key] = tagMap[key];
-    });    
-
-    $.each(tagMapSorted, function( name, count ) {
-      var newLink = $("<a />", {
-          'data-name': name,
-          href : "#",
-          text : type+name+"("+count+")",
-          class: 'filter_link'
-      });
-
-      $('#allTags').append(newLink).append('<br/>')
-    });
+  this.parseText = function() {
+    this.sorter.parseHashtags()
+    this.sorter.parseSmartTags()
+    this.extractAllTags()
   }
 
   this.extractAllTags = function() {
     $('#allTags').html("")
-    this.extractTags('smartTag','$');
-    this.extractTags('hash_link','#');
+    this.sorter.extractTags('smartTag','$');
+    this.sorter.extractTags('hash_link','#');
   }  
 
   //variable to reference the file id that we are modified, used when updated it
