@@ -93,4 +93,29 @@ var Sorter = function(editorId) {
       $('#allTags').append(newLink).append('<br/>')
     });
   }
+
+  this.getTagAndParents = function(hashtags) {
+    var self = this
+    var hashtags = hashtags.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
+    hashtags = hashtags.filter(function(h){ return h != "" });
+    var fullTags = [];
+    $(this.editor).find('li').each(function() {
+      var li_text = $(this).clone().children('ul').remove().end().html();
+      //filter using OR
+      if (new RegExp(hashtags.join("|")).test(li_text)) {
+        var fullTag = li_text;
+        var lis = $(this).parents('li').each(function() {
+          var parentText = $(this).clone().children('ul').remove().end().html();
+          fullTag = parentText +' | '+ fullTag
+        })
+      //  fullTag = fullTag + li_text
+        fullTag = fullTag.replace(/\s+ /g, ' ');
+        fullTags.push(fullTag);
+      }
+    })
+    
+    console.log("fullTag________",fullTags);
+    return fullTags;
+  }
+  
 }

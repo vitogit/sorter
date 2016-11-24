@@ -4,7 +4,7 @@ describe('Sorter', function() {
   before(function() { 
     var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1</li><li> child2 #hash2 <ul> <li>grandchild1</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
     var allTags = $('<div id="allTags"></div>')
-    $('body').append(editor).append(allTags)    
+    $('body').append(editor).append(allTags)
     sorter = new Sorter(editor)
   }); 
 
@@ -57,23 +57,21 @@ describe('Sorter', function() {
     var tagsCount = $('#allTags a').length
     expect(tagsCount).to.be.eq(3) 
   })  
-     
-  // it('mounts a hello tag with a setted name', function() {
-  //   tag = riot.mount('hello', {name: 'Carl'})[0]
-  //   expect(tag.name).to.be.eq('Carl')
-  // })
-  // 
-  // it('prints <h1>Hello {name}</h1> ', function() {
-  //   tag = riot.mount('hello', {name: 'Carl'})[0]
-  //   var tagText = document.querySelector('hello > h1').textContent
-  //   expect(tagText).to.be.eq('Hello Carl')
-  // })
-  // 
-  // it('transform name to uppercase', function() {
-  //   tag = riot.mount('hello', {name: 'Carl'})[0]
-  //   tag.uppercase()
-  //   expect(tag.name).to.be.eq('CARL')
-  // })
+
+
+  it('get hashtags and parents in text', function() {
+    $('#editor').remove()
+    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task</li><li> child2 #hash2 <ul> <li>grandchild1 #task</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
+    $('body').append(editor) 
+    sorter = new Sorter(editor)
+    
+    var tags = sorter.getTagAndParents('#task')
+
+    expect(tags.length).to.be.eq(2) 
+    expect(tags[0]).to.be.eq(' root | child1 #task') 
+    expect(tags[1]).to.be.eq(' root | child2 #hash2 | grandchild1 #task') 
+  })  
+  
   
   function visibleRows() {
    return $(sorter.editor).find('li').filter(function() {
