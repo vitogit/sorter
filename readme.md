@@ -7,7 +7,6 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 #### Write your notes following a hierarchy with bullets points 
 ![Sorter in action](http://i64.tinypic.com/2lk7lfk.png)
 
-
 #### Add hashtags to your notes and filter by hashtags or words to just focus on what you need
 ![Sorter with tags](http://i66.tinypic.com/2ccplbs.png)
 
@@ -25,14 +24,24 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 - idea: ideas to develop in the future
 - p1, p2, p3: add priority to your tasks so then you can filter important tasks
 
-
-
 ##### SmartTags: they are a special kind of hashtag with buildin functionality:
 - $todo : the note is painted yellow
 - $completed: the note is painted green
 - $journal: the current date is added and so you could filter by date.  [not implemented yet]
 
- 
 ##### You can choose between different views. [not implemented yet]
 - Tasks:
 - Journal:
+
+
+##Installation
+
+```
+npm install 
+npm start
+```
+
+go to http://localhost:4000
+
+To run tests go to 
+http://localhost:4000/test/
