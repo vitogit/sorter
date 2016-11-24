@@ -43,9 +43,20 @@ var App = function() {
       $('.visual').hide();
       $("#"+name).show();
     })
+
+    $('.router').click(function(){
+      var name = $(this).data('name');
+      if (name == "tasks") {
+        app.loadTaskView();
+      }
+      
+      $('.router').removeClass();
+      $(this).addClass('active');
+      
+      $('.visual').hide();
+      $("#"+name).show();
+    })
     
-
-
     tinymce.init({
       selector: '#editor',
       width: '100%',
@@ -68,7 +79,7 @@ var App = function() {
             var hashtag =  '#'+$(this).data('name')
             $('#filter_box').val(hashtag)
             $('#filter_box').trigger("input")
-          })          
+          }) 
         });
       }
     });
@@ -164,6 +175,19 @@ var App = function() {
       $(this).parent().addClass(classes);
     })
   }
+  
+  this.loadTaskView = function() {
+    var tasks = this.sorter.getTagAndParents('#task')
+    var todos = this.sorter.getTagAndParents('$todo')
+    console.log("tasks________",tasks)
+    $.each(tasks, function( index, task ) {
+      var newTask = $("<li />", {
+          class: 'task',
+          text: task
+      });
+      $('#taskList').append(newTask)
+    });
+  }  
 };
 
 var Util = function() {

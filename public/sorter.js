@@ -100,12 +100,12 @@ var Sorter = function(editorId) {
     hashtags = hashtags.filter(function(h){ return h != "" });
     var fullTags = [];
     $(this.editor).find('li').each(function() {
-      var li_text = $(this).clone().children('ul').remove().end().html();
+      var li_text = $(this).clone().children('ul').remove().end().text();
       //filter using OR
       if (new RegExp(hashtags.join("|")).test(li_text)) {
         var fullTag = li_text;
         var lis = $(this).parents('li').each(function() {
-          var parentText = $(this).clone().children('ul').remove().end().html();
+          var parentText = $(this).clone().children('ul').remove().end().text();
           fullTag = parentText +' | '+ fullTag
         })
       //  fullTag = fullTag + li_text
@@ -113,8 +113,6 @@ var Sorter = function(editorId) {
         fullTags.push(fullTag);
       }
     })
-    
-    console.log("fullTag________",fullTags);
     return fullTags;
   }
   
