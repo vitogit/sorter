@@ -25,10 +25,7 @@ var App = function() {
     })
 
     $('#container').on('click', '.filter_link', function(){
-      var type = $(this).text()[0];
-      var hashtag =  type+$(this).data('name')
-      $('#filter_box').val(hashtag)
-      $('#filter_box').trigger("input")
+      app.filterBox(this)
     })
 
     $('#container').on('click', '.hideThisTag', function(){
@@ -75,16 +72,21 @@ var App = function() {
           this.getDoc().body.style.fontSize = '14px';
           app.tinyDom = tinyMCE.activeEditor.dom.getRoot()
           app.sorter = new Sorter(app.tinyDom);
-          $(app.tinyDom).on('click', '.hash_link', function(){
-            var hashtag =  '#'+$(this).data('name')
-            $('#filter_box').val(hashtag)
-            $('#filter_box').trigger("input")
+          $(app.tinyDom).on('click', '.hash_link, a.smartTag', function(){
+            app.filterBox(this)
           }) 
         });
       }
     });
   }
 
+  this.filterBox = function(s) {
+    var type = $(s).text()[0];
+    var hashtag =  type+$(s).data('name')
+    $('#filter_box').val(hashtag)
+    $('#filter_box').trigger("input")    
+  }
+  
   this.filter = function() {
     var current_text = $('#filter_box').val()
     var tagsToHide = $('.hideThisTag:checked').map(function() {
@@ -187,7 +189,9 @@ var App = function() {
       });
       $('#taskList').append(newTask)
     });
-  }  
+  } 
+  
+   
 };
 
 var Util = function() {
