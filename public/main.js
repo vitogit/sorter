@@ -90,11 +90,13 @@ var App = function() {
   
   this.filter = function() {
     var current_text = $('#filter_box').val()
+    var type_and = current_text.includes('&')
+    
     var tagsToHide = $('.hideThisTag:checked').map(function() {
                         return $(this).val();
                      }).get();
     tagsToHide = tagsToHide.filter(function(h){ return h != "" });
-    this.sorter.filter(current_text, tagsToHide);
+    this.sorter.filter(current_text, tagsToHide, type_and);
   }
 
   this.parseText = function() {

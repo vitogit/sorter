@@ -3,7 +3,8 @@ var Sorter = function(editorId) {
   
   //current_text: space separated string, by which will filter the elements 
   //tagsToHide: array of tags to hide
-  this.filter = function(current_text, tagsToHide) {
+  //type_and: filter using and instead of or
+  this.filter = function(current_text, tagsToHide, type_and) {
 
     current_text = current_text || ''
     tagsToHide = tagsToHide || []
@@ -19,7 +20,13 @@ var Sorter = function(editorId) {
     $(this.editor).find('li').each(function() {
       var li_text = $(this).clone().children('ul').remove().end().html();
       //filter using OR
-      if (new RegExp(hashtags.join("|")).test(li_text)) {
+      var regex = hashtags.join("|")
+      if (type_and) {
+        regex = hashtags.map(function(e) {
+                            return '(?=.*'+e+')'
+                         }).join("")
+      }
+      if (new RegExp(regex).test(li_text)) {
         $(this).show()
         $(this).parents().show()
         $(this).find('li').show()

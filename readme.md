@@ -10,6 +10,12 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 #### Add hashtags to your notes and filter by hashtags or words to just focus on what you need
 ![Sorter with tags](http://i66.tinypic.com/2ccplbs.png)
 
+If you write `&` anywhere in the filter it will perform an AND filter: 
+`ex: & #task $todo it will search notes that have both hashtags.`
+in other case it will perform and OR filter.
+`ex: #task $todo it will search notes that have any of the hashtags.`
+
+
 #### Sync your info with Google Drive.
  Click the save button and it will create a new document in your google drive called: sorter_notes. It will be loaded automatically when the app start.
  It uses my library gSyncDrive for sync with Google Drive Api v3 https://github.com/vitogit/gDriveSync.js 

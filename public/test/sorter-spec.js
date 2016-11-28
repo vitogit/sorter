@@ -2,7 +2,7 @@ var  expect = chai.expect
 
 describe('Sorter', function() {
   before(function() { 
-    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1</li><li> child2 #hash2 <ul> <li>grandchild1</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
+    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1 #subhash1</li><li> child2 #hash2 <ul> <li>grandchild1</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
     var allTags = $('<div id="allTags"></div>')
     $('body').append(editor).append(allTags)
     sorter = new Sorter(editor)
@@ -27,9 +27,17 @@ describe('Sorter', function() {
     expect(visibleRows()).to.be.eq(3) //root and child and grandchild
   }) 
   
-  it('filter by 2 hashtags', function() {
+  it('filter by 2 hashtags using OR ', function() {
     sorter.filter('#hash1 #hash2');
     expect(visibleRows()).to.be.eq(5) //root and everyone
+  }) 
+
+  it('filter by 2 hashtags using AND ', function() {
+    sorter.filter('#hash1 #subhash1', [], 'AND');
+    expect(visibleRows()).to.be.eq(2) //root and the first
+    
+    sorter.filter('#subhash1 #hash1', [], 'AND');
+    expect(visibleRows()).to.be.eq(2) //root and the first    
   }) 
   
   it('hide completed and search hashtags', function() {
@@ -43,7 +51,7 @@ describe('Sorter', function() {
     var parsedCount = $('.hash_link').length
     expect(parsedCount).to.be.eq(2) 
   })  
-
+  
   it('parse the smartTags', function() {
     $(sorter.editor).find('li').show()
     sorter.parseSmartTags();
@@ -57,8 +65,8 @@ describe('Sorter', function() {
     var tagsCount = $('#allTags a').length
     expect(tagsCount).to.be.eq(3) 
   })  
-
-
+  
+  
   it('get hashtags and parents in text', function() {
     $('#editor').remove()
     var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task</li><li> child2 #hash2 <ul> <li>grandchild1 #task</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
@@ -66,7 +74,7 @@ describe('Sorter', function() {
     sorter = new Sorter(editor)
     
     var tags = sorter.getTagAndParents('#task')
-
+  
     expect(tags.length).to.be.eq(2) 
     expect(tags[0]).to.be.eq(' root | child1 #task') 
     expect(tags[1]).to.be.eq(' root | child2 #hash2 | grandchild1 #task') 
