@@ -56,6 +56,7 @@ var App = function() {
     
     tinymce.init({
       selector: '#editor',
+      forced_root_block : '',
       width: '100%',
       height: '100%',
       statusbar: false,
@@ -135,7 +136,7 @@ var App = function() {
     var file = {id: fileId }
     window.driveService.loadFile(file, function(file){
       self.current_file = file;
-      $(self.tinyDom).html(file.content);
+      tinyMCE.activeEditor.setContent(file.content);
       self.extractAllTags();
       self.filter();
     })
