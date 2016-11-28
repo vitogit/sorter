@@ -66,7 +66,7 @@ var App = function() {
       height: '100%',
       statusbar: false,
       menubar:false,
-      content_css : 'simplex.bootstrap.min.css, editor.css',
+      content_css : './assets/css/simplex.bootstrap.min.css, ./assets/css/editor.css',
       plugins: [
         'autolink lists link save autoresize'
       ],
