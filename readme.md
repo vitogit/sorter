@@ -14,11 +14,11 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
  Click the save button and it will create a new document in your google drive called: sorter_notes. It will be loaded automatically when the app start.
  It uses my library gSyncDrive for sync with Google Drive Api v3 https://github.com/vitogit/gDriveSync.js 
 
-#### Default hashtags
+#### Suggested hashtags
 
 - read-later: something that you want to read later
 - bookmark: articles or internet links
-- tip: something intersting that you found
+- tip: something interesting that you found
 - goal: maybe a long term goal with a lot of actions and sub goals
 - action: something that you have to do, some task, call, etc
 - idea: ideas to develop in the future
