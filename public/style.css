@@ -11,6 +11,10 @@
   overflow: auto;
 }
 
+.sub_bookmark_link {
+  margin-left: 10px;
+}
+
 .not_authenticated, .authenticated {
   display: none;
 }

@@ -14,6 +14,12 @@ var App = function() {
       $('#filter_box').trigger("input")
     })
 
+    $('.sub_bookmark_link').click(function(){
+      var hashtag = $(this).text()
+      $('#filter_box').val('& #current_sprint '+hashtag)
+      $('#filter_box').trigger("input")
+    })
+    
     $('#container').on('click', '.file_link', function(){
       var fileId = $(this).data('id');
       app.loadNotes(fileId);
