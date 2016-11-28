@@ -73,6 +73,19 @@ describe('Sorter', function() {
     expect(tagsCount).to.be.eq(2) 
   })
 
+  it('extract current sprint tags', function() {
+    $('#editor').remove()
+    $('#sprints').remove()
+    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task #current_sprint</li><li> child2 $todo #current_sprint <ul> <li>grandchild1 #task </li><li>grandchild2 $completed #current_sprint</li></ul> </li></ul> </li></ul></div>');
+    var sprints = $('<div id="sprints"></div>')
+    $('body').append(editor).append(sprints)    
+    sorter = new Sorter(editor)
+        
+    sorter.extractCurrentSprintTags();
+    var currentSprint = $('#sprints').text()
+    expect(currentSprint).to.be.eq('#current_sprint (3)$todo(1)$completed(1)#task(1)') 
+  })
+  
   it('get hashtags and parents in text', function() {
     $('#editor').remove()
     var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task</li><li> child2 #hash2 <ul> <li>grandchild1 #task</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');

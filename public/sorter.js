@@ -120,7 +120,6 @@ var Sorter = function(editorId) {
         }
       }
     })
-    
     var currentSprint = $("<a />", {
         'data-name': 'current_sprint',
         href : "#",
@@ -130,6 +129,7 @@ var Sorter = function(editorId) {
 
     $('#sprints').append(currentSprint).append('<br/>')    
     delete tagMap['current_sprint']
+    
     $.each(tagMap, function( name, count ) {
       var type = name[0];
       var newLink = $("<a />", {
@@ -140,9 +140,8 @@ var Sorter = function(editorId) {
       });
 
       $('#sprints').append(newLink).append('<br/>')
-    });   
-      $('#sprints').append('<br/>')
-     
+    });
+    $('#sprints').append('<br/>')
   }
   
   this.extractSprintTags = function() {
