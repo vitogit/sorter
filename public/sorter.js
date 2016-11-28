@@ -101,6 +101,39 @@ var Sorter = function(editorId) {
     });
   }
 
+  this.extractSprintTags = function() {
+    var tagMap = {}
+    $(this.editor).find('a.hash_link').each(function(){
+      var name = $(this).data('name')
+      if (name.startsWith('sprint')) {
+        if (tagMap[name]) {
+          tagMap[name] = tagMap[name]+1
+        } else {
+          tagMap[name] = 1
+        }
+      }
+
+    })
+    
+    var tagMapSorted = {};
+    Object.keys(tagMap).sort().forEach(function(key) {
+      tagMapSorted[key] = tagMap[key];
+    });
+
+    $.each(tagMapSorted, function( name, count ) {
+      var number = name[name.length-1];
+      var singleName = name.substring(0, name.length - 1);
+      var newLink = $("<a />", {
+          'data-name': name,
+          href : "#",
+          text : "#"+singleName+" "+number+" ("+count+")",
+          class: 'bookmark_link'
+      });
+
+      $('#sprints').append(newLink).append('<br/>')
+    });
+  }
+  
   this.getTagAndParents = function(hashtags) {
     var self = this
     var hashtags = hashtags.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
