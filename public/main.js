@@ -12,8 +12,9 @@ var App = function() {
       app.filterBox(this)
     })
     
-    $('.sub_bookmark_link').click(function(){
-      var hashtag = $(this).text()
+    $('#container').on('click', '.sub_bookmark_link', function(){
+      var type = $(this).text()[0];
+      var hashtag =  type+$(this).data('name')
       $('#filter_box').val('& #current_sprint '+hashtag)
       $('#filter_box').trigger("input")
     })
@@ -114,7 +115,9 @@ var App = function() {
     $('#sprints').html("")
     this.sorter.extractTags('smartTag','$');
     this.sorter.extractTags('hash_link','#');
+    this.sorter.extractCurrentSprintTags()
     this.sorter.extractSprintTags();
+    
   }  
 
   //variable to reference the file id that we are modified, used when updated it

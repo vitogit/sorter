@@ -100,7 +100,51 @@ var Sorter = function(editorId) {
       $('#allTags').append(newLink).append('<br/>')
     });
   }
+  
+  this.extractCurrentSprintTags = function() {
+    var tagMap = {'current_sprint':0, '$todo':0, '$completed':0, '#task':0}
+    
+    $(this.editor).find('li').each(function(){
+      var li_text = $(this).clone().children('ul').remove().end().text();
 
+      if (li_text.includes('#current_sprint')) {
+        tagMap['current_sprint']++
+        if (li_text.includes('$todo')) {
+          tagMap['$todo']++
+        }
+        if (li_text.includes('#task')) {
+          tagMap['#task']++
+        }  
+        if (li_text.includes('$completed')) {
+          tagMap['$completed']++
+        }
+      }
+    })
+    
+    var currentSprint = $("<a />", {
+        'data-name': 'current_sprint',
+        href : "#",
+        text : "#current_sprint ("+tagMap['current_sprint']+")",
+        class: 'bookmark_link'
+    });
+
+    $('#sprints').append(currentSprint).append('<br/>')    
+    delete tagMap['current_sprint']
+    $.each(tagMap, function( name, count ) {
+      var type = name[0];
+      var newLink = $("<a />", {
+          'data-name': name.substring(1, name.length),
+          href : "#",
+          text : name+"("+count+")",
+          class: 'sub_bookmark_link'
+      });
+
+      $('#sprints').append(newLink).append('<br/>')
+    });   
+      $('#sprints').append('<br/>')
+     
+  }
+  
   this.extractSprintTags = function() {
     var tagMap = {}
     $(this.editor).find('a.hash_link').each(function(){
@@ -112,7 +156,6 @@ var Sorter = function(editorId) {
           tagMap[name] = 1
         }
       }
-
     })
     
     var tagMapSorted = {};
