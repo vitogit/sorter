@@ -103,7 +103,7 @@ var Sorter = function(editorId) {
   }
   
   this.extractCurrentSprintTags = function() {
-    var tagMap = {'current_sprint':0, '$todo':0, '$completed':0, '#task':0}
+    var tagMap = {'current_sprint':0, '$todo':0, '#task':0, '$completed':0,}
     
     $(this.editor).find('li').each(function(){
       var li_text = $(this).clone().children('ul').remove().end().text();
