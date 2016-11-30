@@ -55,6 +55,7 @@ var Sorter = function(editorId) {
           href : "#",
           class : 'smartTag',
           'data-name': smartTag,
+          'data-created-at': new Date().getTime(),
           text : '$'+smartTag
       })
      
