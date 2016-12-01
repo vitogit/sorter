@@ -188,8 +188,16 @@ var App = function() {
       $(this).parent().removeClass();
       $(this).parent().addClass(classes);
     })
+    this.paintLeaves();
   }
-  
+
+  this.paintLeaves = function() {
+    $(this.tinyDom).find('li').removeClass('leaf');
+    $(this.tinyDom).find('li:not(:has(ul))').each(function() {
+      $(this).addClass('leaf');
+    })
+  }
+
   this.loadTaskView = function() {
     var tasks = this.sorter.getTagAndParents('#task')
     var todos = this.sorter.getTagAndParents('$todo')

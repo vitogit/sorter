@@ -1,3 +1,37 @@
-ul {
-  padding-left: 20px;
+ul,
+li {
+  padding: 0;
+  margin: 0 5px;
+  list-style: none;
+}
+
+li {
+  margin-left: 1em;
+}
+
+li:before {
+  content: '□';
+  font-family: 'FontAwesome';
+  float: left;
+  margin-left: -1em;
+  padding-right: 5px;  
+}
+
+li.completed:before{
+  content: '✔';
+  color: #4caf50!important;
+} 
+
+li.leaf:before {
+  content: '■';
+  color: #d9230f;
+}
+
+li.journal:before {
+  content: '★';
+  color: #029acf;
+}
+
+li.todo:before {
+  color: #ffeb3b;
 }
