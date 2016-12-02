@@ -6,7 +6,7 @@
   margin-left: 70%;
 }
 
-#allTags {
+#menu .panel-small {
   height: 200px;
   overflow: auto;
 }

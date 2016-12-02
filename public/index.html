@@ -33,7 +33,7 @@
               <div class="panel-heading">
                 <h3 class="panel-title">Tags</h3>
               </div>
-              <div class="panel-body">
+              <div class="panel-body panel-small">
                 <a class="filter_clear"  href="#">Clear</a><br/>
                 <br/>
                 <a class="bookmark_link" data-name="todo" href="#">$todo</a> <br/>
@@ -50,26 +50,22 @@
               <div class="panel-heading">
                 <h3 class="panel-title">All tags</h3>
               </div>
-              <div id="allTags" class="panel-body">
+              <div id="allTags" class="panel-body panel-small">
               </div>
 
               <div class="panel-heading">
                 <h3 class="panel-title">Hide tags</h3>
               </div>
               <div id="hideTags" class="panel-body">
-                <li ><input class="hideThisTag" type="checkbox" checked value="$completed"> $completed </input></li>
-                <li ><input class="hideThisTag" type="checkbox" checked value="$journal"> $journal </input></li>
+                <input class="hideThisTag" type="checkbox" checked value="$completed"> $completed </input><br />
+                <input class="hideThisTag" type="checkbox" checked value="$journal"> $journal </input>
               </div>
               
               <div class="panel-heading">
-                <h3 class="panel-title">Views</h3>
+                <h3 class="panel-title">Notebooks</h3>
               </div>
-              <div class="panel-body">
-                <ul class="nav">
-                    <li class="active"><a data-name="editorDiv" class="router" href="javascript:;">Home Visual</a></li>
-                    <li><a data-name="tasks" class="router" href="javascript:;">Tasks Planning</a></li>
-                    <li><a data-name="journal" class="router" href="javascript:;">Journal</a></li>
-                </ul>
+              <div id="notebooks" class="panel-body">
+                <br/><br/><input type="text" id="new_notebook"/> <a id="save_new_notebook" onclick="save_new_notebook()" data-name="home" href="#">Save new</a>
               </div>
             </div>
           </nav>
@@ -152,6 +148,30 @@
       function not_auth() {
         $('.not_authenticated').show();
         $('.authenticated').hide();
+      }
+      
+      function save_new_notebook() {
+        var name = $('#new_notebook').val()
+        var newFile = {
+          content: '<ul><li>'+name+'</li></ul>',
+          id:null,
+          name: 'sorter_notes_'+name
+        }
+        app.newNotes(newFile, function(file){
+          if (file.id) {
+            var newLink = $("<a />", {
+                href : "#",
+                class: 'notebook_link',
+                'data-id': file.id,
+                'data-name': file.name,
+                text: '@'+name
+            })
+            $('#notebooks').prepend(newLink).prepend('<br>')
+            $('#new_notebook').val("")
+          } else {
+            console.log("error________")
+          }
+        });
       }
     </script>
     <script src="https://apis.google.com/js/api.js?onload=initGapi"></script>

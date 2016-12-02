@@ -19,7 +19,7 @@ var App = function() {
       $('#filter_box').trigger("input")
     })
     
-    $('#container').on('click', '.file_link', function(){
+    $('#container').on('click', '.notebook_link', function(){
       var fileId = $(this).data('id');
       app.loadNotes(fileId);
     })
@@ -135,6 +135,16 @@ var App = function() {
     tinymce.activeEditor.selection.moveToBookmark(this.bookmark);
   }
   
+  this.newNotes = function(newFile, done) {
+    driveService.saveFile(newFile, function(file){
+      self.current_file = file
+      console.log('saved file with id:'+file.id)
+      console.log("newFile.content________",newFile.content)
+      tinyMCE.activeEditor.setContent(newFile.content);
+      done(file)
+    })
+  }
+  
   this.saveNotes = function() {
     this.current_file.content = $(this.tinyDom).html()
     driveService.saveFile(self.current_file, function(file){
@@ -153,7 +163,7 @@ var App = function() {
     })
   }
 
-  this.notes = []
+  this.notebooks = []
   this.listNotes = function() {
     window.driveService.listFiles(function(err, files){
       if (err) {
@@ -161,23 +171,25 @@ var App = function() {
         return
       }
       $('#fileFinder ol').html("");
-      self.notes = []
+      self.notebooks = []
       $.each(files, function( index, file ) {
-        self.notes.push(file)
-        var li = $('<li/>')
+        self.notebooks.push(file)
+        var name = file.name.split('sorter_notes_')[1]
         var newLink = $("<a />", {
             href : "#",
-            class: 'file_link',
+            class: 'notebook_link',
             'data-id': file.id,
             'data-name': file.name,
-            text: file.name
-        }).appendTo(li);
-        $('#fileFinder ol').append(li)
+            text: '@'+name
+        })
+        $('#notebooks').prepend(newLink).prepend('<br>')
       });
       //todo move this to a better place
       if (files.length) {
-          self.current_file = files[0]
-          self.loadNotes(self.current_file.id)
+        self.current_file = files.filter(function ( file ) {
+                              return file.name.includes('sorter_notes_home');
+                            })[0];
+        self.loadNotes(self.current_file.id)
       }
     })
   }
@@ -201,7 +213,6 @@ var App = function() {
   this.loadTaskView = function() {
     var tasks = this.sorter.getTagAndParents('#task')
     var todos = this.sorter.getTagAndParents('$todo')
-    console.log("tasks________",tasks)
     $.each(tasks, function( index, task ) {
       var newTask = $("<li />", {
           class: 'task',
@@ -210,8 +221,6 @@ var App = function() {
       $('#taskList').append(newTask)
     });
   } 
-  
-   
 };
 
 var Util = function() {

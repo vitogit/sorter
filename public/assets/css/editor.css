@@ -17,15 +17,15 @@ li:before {
   padding-right: 5px;  
 }
 
-li.completed:before{
-  content: '✔';
-  color: #4caf50!important;
-} 
-
 li.leaf:before {
   content: '■';
   color: #d9230f;
 }
+
+li.completed:before{
+  content: '✔';
+  color: #4caf50!important;
+} 
 
 li.journal:before {
   content: '★';

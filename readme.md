@@ -35,10 +35,9 @@ in other case it will perform and OR filter.
 - $completed: the note is painted green
 - $journal: the current date is added and so you could filter by date.  [not implemented yet]
 
-##### You can choose between different views. [not implemented yet]
-- Tasks:
-- Journal:
-
+##### Notebooks
+You can create new notebooks (google docs) and access them easily from the left menu. Just write the name and click "save new"
+There is a default notebook called `home`, all notebooks has a prefix: sorter_notes_ so that's is how they look in google drive.
 
 ##Installation
 
