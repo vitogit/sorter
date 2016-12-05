@@ -177,6 +177,18 @@ var Sorter = function(editorId) {
     });
   }
   
+  this.moveToSprint = function(sprintNumber) {
+    $(this.editor).find('a.hash_link').each(function(){
+      var name = $(this).data('name')
+      if (name =='current_sprint') { //remove old current_sprint
+        $(this).remove();
+      }
+      if (name == 'sprint'+sprintNumber) { //append current sprint
+        $(this).after(' <a class="hash_link" data-name="current_sprint" href="#">#current_sprint</a>')
+      }
+    })
+  }
+  
   this.getTagAndParents = function(hashtags) {
     var self = this
     var hashtags = hashtags.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')

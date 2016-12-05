@@ -117,9 +117,12 @@ var App = function() {
     this.sorter.extractTags('hash_link','#');
     this.sorter.extractCurrentSprintTags()
     this.sorter.extractSprintTags();
-    
   }  
 
+  this.moveToSprint = function(sprint) {
+    this.sorter.moveToSprint(sprint);
+    this.extractAllTags();
+  }
   //variable to reference the file id that we are modified, used when updated it
   this.current_file = {
       content: '',
@@ -134,6 +137,7 @@ var App = function() {
   this.loadBookmark = function() {
     tinymce.activeEditor.selection.moveToBookmark(this.bookmark);
   }
+  
   
   this.newNotes = function(newFile, done) {
     driveService.saveFile(newFile, function(file){

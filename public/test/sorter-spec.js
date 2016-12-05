@@ -76,17 +76,34 @@ describe('Sorter', function() {
   it('extract current sprint tags', function() {
     $('#editor').remove()
     $('#sprints').remove()
-    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task #current_sprint</li><li> child2 $todo #current_sprint <ul> <li>grandchild1 #task </li><li>grandchild2 $completed #current_sprint</li></ul> </li></ul> </li></ul></div>');
+    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task #sprint1 #current_sprint</li><li> child2 $todo #sprint1 #current_sprint <ul> <li>grandchild1 #task </li><li>grandchild2 $completed #sprint1 #current_sprint</li></ul> </li></ul> </li></ul></div>');
     var sprints = $('<div id="sprints"></div>')
     $('body').append(editor).append(sprints)    
     sorter = new Sorter(editor)
         
     sorter.extractCurrentSprintTags();
     var currentSprint = $('#sprints').text()
-    expect(currentSprint).to.be.eq('#current_sprint (3)$todo(1)$completed(1)#task(1)') 
+    expect(currentSprint).to.be.eq('#current_sprint (3)$todo(1)#task(1)$completed(1)') 
+    expect(countHashtag('#current_sprint')).to.be.eq(3)
   })
-  
-  it('get hashtags and parents in text', function() {
+
+  it('changes the sprint', function() {
+    $('#editor').remove()
+    $('#sprints').remove()
+    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 <a class="hash_link" data-name="task" href="#">#task</a> <a class="hash_link" data-name="sprint1" href="#">#sprint1</a> <a class="hash_link" data-name="current_sprint" href="#">#current_sprint</a></li><li> child2 $todo <a class="hash_link" data-name="sprint1" href="#">#sprint1</a> <a class="hash_link" data-name="current_sprint" href="#">#current_sprint</a> <ul> <li>grandchild1 <a class="hash_link" data-name="sprint2" href="#">#sprint2</a> <a class="hash_link" data-name="task" href="#">#task</a> </li><li>grandchild2 $completed <a class="hash_link" data-name="sprint1" href="#">#sprint1</a> <a class="hash_link" data-name="current_sprint" href="#">#current_sprint</a></li></ul> </li></ul> </li></ul></div>');
+    var sprints = $('<div id="sprints"></div>')
+    $('body').append(editor).append(sprints)    
+    sorter = new Sorter(editor)    
+    
+    expect(countHashtag('#sprint1')).to.be.eq(3) 
+    expect(countHashtag('#sprint2')).to.be.eq(1) 
+    sorter.moveToSprint(2); //change the current sprint to 2 from 1
+    expect(countHashtag('#sprint1')).to.be.eq(3) 
+    expect(countHashtag('#sprint2')).to.be.eq(1) 
+    expect(countHashtag('#current_sprint')).to.be.eq(1) 
+  })
+
+  xit('get hashtags and parents in text [currently not used]', function() {
     $('#editor').remove()
     var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task</li><li> child2 #hash2 <ul> <li>grandchild1 #task</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
     $('body').append(editor) 
@@ -99,10 +116,18 @@ describe('Sorter', function() {
     expect(tags[1]).to.be.eq(' root | child2 #hash2 | grandchild1 #task') 
   })
 
+  
   function visibleRows() {
    return $(sorter.editor).find('li').filter(function() {
             return $(this).css('display') !== 'none';
           }).length;
   }
 
+  function countHashtag(hashtag) {
+   return $(sorter.editor).find('li').filter(function() {
+      var li_text = $(this).clone().children('ul').remove().end().html();
+      return li_text.includes(hashtag);
+          }).length;
+  }
+  
 })

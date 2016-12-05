@@ -44,6 +44,7 @@
                 <div id="sprints">
                   
                 </div>
+                <a onclick="change_sprint()" href="#">change sprint</a><input type="text" id="next_sprint"/><br/>
 
               </div>
 
@@ -173,6 +174,12 @@
           }
         });
       }
+      
+      function change_sprint() {
+        var nextSprint = $('#next_sprint').val();
+        app.moveToSprint(nextSprint);
+      }
+
     </script>
     <script src="https://apis.google.com/js/api.js?onload=initGapi"></script>
   </body>
