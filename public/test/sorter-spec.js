@@ -2,7 +2,7 @@ var  expect = chai.expect
 
 describe('Sorter', function() {
   before(function() { 
-    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1 #sprint1</li><li> child2 #hash2 #sprint2<ul> <li>grandchild1</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
+    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1 #sprint1 open @notebook1</li><li> child2 #hash2 #sprint2<ul> <li>grandchild1</li><li>grandchild2 $completed @notebook2</li></ul> </li></ul> </li></ul></div>');
     var allTags = $('<div id="allTags"></div>')
     var sprints = $('<div id="sprints"></div>')
     $('body').append(editor).append(allTags).append(sprints)
@@ -34,10 +34,10 @@ describe('Sorter', function() {
   }) 
 
   it('filter by 2 hashtags using AND ', function() {
-    sorter.filter('#hash1 #sprint1', [], 'AND');
+    sorter.filter('& #hash1 #sprint1', [], 'AND');
     expect(visibleRows()).to.be.eq(2) //root and the first
 
-    sorter.filter('#sprint1 #hash1', [], 'AND');
+    sorter.filter('& #sprint1 #hash1', [], 'AND');
     expect(visibleRows()).to.be.eq(2) //root and the first
   })
 
@@ -59,7 +59,14 @@ describe('Sorter', function() {
     var parsedCount = $('.smartTag').length
     expect(parsedCount).to.be.eq(1)
   })
-
+  
+  it('parse the notebooks links', function() {
+    $(sorter.editor).find('li').show()
+    sorter.parseNotebookTags();
+    var parsedCount = $('.internal_notebook_link').length
+    expect(parsedCount).to.be.eq(2)
+  })
+  
   it('extract all the tags', function() {
     sorter.extractTags('smartTag','$');
     sorter.extractTags('hash_link','#');

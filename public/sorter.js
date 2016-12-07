@@ -9,23 +9,24 @@ var Sorter = function(editorId) {
     current_text = current_text || ''
     tagsToHide = tagsToHide || []
     var self = this
-    var hashtags = current_text.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
+    var hashtags = current_text.replace(/&/g, '').replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
     hashtags = hashtags.filter(function(h){ return h != "" });
     var tagsToHide = tagsToHide.map(function(e) {
                         return e.replace(/\$/g, '\\$');
                      })
     tagsToHide = tagsToHide.filter(function(h){ return h != "" });
 
+    //filter using OR 
+    var regex = hashtags.join("|")
+    if (type_and) {     //filter using AND
+      regex = hashtags.map(function(e) {
+                return '(?=.*'+e+')'
+              }).join("")
+    }
+
     $(this.editor).find('li').hide()
     $(this.editor).find('li').each(function() {
       var li_text = $(this).clone().children('ul').remove().end().html();
-      //filter using OR
-      var regex = hashtags.join("|")
-      if (type_and) {
-        regex = hashtags.map(function(e) {
-                            return '(?=.*'+e+')'
-                         }).join("")
-      }
       if (new RegExp(regex).test(li_text)) {
         $(this).show()
         $(this).parents().show()
@@ -42,9 +43,7 @@ var Sorter = function(editorId) {
   this.parseHashtags = function() {
     var initText = $(this.editor).html()
     var parsedText = initText.replace( /#(\w+)\b(?!<\/a>)/g ,'<a class="hash_link" data-name="$1" href="#">#$1</a>')
-    //parsedText = this.parseSmartTags(parsedText);
     $(this.editor).html(parsedText);
-    //this.extractAllTags();
   }
 
   this.parseSmartTags = function() {
@@ -74,6 +73,23 @@ var Sorter = function(editorId) {
     $(this.editor).html(parsedText);
   }
 
+  this.parseNotebookTags = function() {
+    var initText = $(this.editor).html()
+  
+    var parsedText = initText.replace(/\@(\w+)\b(?!<\/a>)/g, function (match, notebook) {
+      var dataId = $('#notebooks  .notebook_link:contains("'+notebook+'")').data('id');
+      var newLink = $("<a />", {
+          href : "#",
+          class : 'internal_notebook_link',
+          'data-name': notebook,
+          'data-id': dataId,
+          text : '@'+notebook
+      })
+      return newLink.prop('outerHTML');
+    });
+    $(this.editor).html(parsedText);
+  }
+  
   this.extractTags = function(class_name, type) {
     var tagMap = {}
     $(this.editor).find('a.'+class_name).each(function(){
@@ -84,7 +100,7 @@ var Sorter = function(editorId) {
         tagMap[name] = 1
       }
     })
-    
+
     var tagMapSorted = {};
     Object.keys(tagMap).sort().forEach(function(key) {
       tagMapSorted[key] = tagMap[key];

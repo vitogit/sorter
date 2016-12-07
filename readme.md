@@ -39,6 +39,8 @@ in other case it will perform and OR filter.
 You can create new notebooks (google docs) and access them easily from the left menu. Just write the name and click "save new"
 There is a default notebook called `home`, all notebooks has a prefix: sorter_notes_ so that's is how they look in google drive.
 
+Also you can add @my_notebook to your notes and when clicked it will redirect to the notebook called my_notebook
+
 ##Installation
 
 ```

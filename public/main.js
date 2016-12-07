@@ -81,6 +81,13 @@ var App = function() {
           $(app.tinyDom).on('click', '.hash_link, a.smartTag', function(){
             app.filterBox(this)
           }) 
+          $(app.tinyDom).on('click', '.internal_notebook_link', function(){
+            var confirm1 = confirm('Are you sure? This will open a document and unsaved changes will be lost');
+            if (confirm1) {
+              var fileId = $(this).data('id');
+              app.loadNotes(fileId);
+            }
+          })
         });
       }
     });
@@ -107,6 +114,7 @@ var App = function() {
   this.parseText = function() {
     this.sorter.parseHashtags()
     this.sorter.parseSmartTags()
+    this.sorter.parseNotebookTags()
     this.extractAllTags()
   }
 
@@ -142,8 +150,6 @@ var App = function() {
   this.newNotes = function(newFile, done) {
     driveService.saveFile(newFile, function(file){
       self.current_file = file
-      console.log('saved file with id:'+file.id)
-      console.log("newFile.content________",newFile.content)
       tinyMCE.activeEditor.setContent(newFile.content);
       done(file)
     })
