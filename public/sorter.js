@@ -166,7 +166,7 @@ var Sorter = function(editorId) {
   
   this.extractSprintTags = function() {
     var tagMap = {}
-    $(this.editor).find('a.hash_link').each(function(){
+    $(this.editor).find('a.hash_link:contains("sprint")').each(function(){
       var name = $(this).data('name')
       if (name.startsWith('sprint')) {
         if (tagMap[name]) {
