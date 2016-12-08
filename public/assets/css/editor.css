@@ -39,6 +39,6 @@ li.todo:before {
 li.filtered {
   background-color: rgba(0,0,0,0.075);
 }
-li:not(.filtered) { 
+li:not(.filtered):not(.smartTag) { 
   background-color: #fcfcfc; 
 }
