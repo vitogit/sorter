@@ -91,8 +91,12 @@ var App = function() {
           $(app.tinyDom).on('keydown', function(e){
             var cKey = 67 == e.keyCode;
             var sKey = 83 == e.keyCode;
+            var fKey = 70 == e.keyCode;
             var node = ed.selection.getNode()
             var sprintNumber = app.sorter.getSprintNumber();
+            if (e.altKey && e.ctrlKey && fKey ) {
+              $('#filter_box').focus();
+            }
             if (e.altKey && e.ctrlKey && cKey ) {
               $(node).find('a:contains("#task"), a:contains("$todo")').replaceWith( "$completed" )
             }

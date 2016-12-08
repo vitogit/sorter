@@ -45,6 +45,7 @@ Also you can add @my_notebook to your notes and when clicked it will redirect to
 
 - `ctrl+alt+c` : add the $complete tag to the current tag and removes the #task and $todo tags
 - `ctrl+alt+s` : add #current_sprint and #sprint2 to the current note, when current sprint is 2
+- `ctrl+alt+f` : focus on the filter box
 
 ##Installation
 
