@@ -88,6 +88,22 @@ var App = function() {
               app.loadNotes(fileId);
             }
           })
+          $(app.tinyDom).on('keydown', function(e){
+            var cKey = 67 == e.keyCode;
+            var sKey = 83 == e.keyCode;
+            var node = ed.selection.getNode()
+            var sprintNumber = app.sorter.getSprintNumber();
+            if (e.altKey && e.ctrlKey && cKey ) {
+              $(node).find('a:contains("#task"), a:contains("$todo")').replaceWith( "$completed" )
+            }
+            if (e.altKey && e.ctrlKey && sKey) {
+              if ($(node).find('ul')[0]) { //it has childrens
+                $(node).find('ul')[0].before(' #current_sprint #sprint'+sprintNumber+' ')
+              } else {
+                $(node).append(' #current_sprint #sprint'+sprintNumber+' ')
+              }
+            }
+          }) 
         });
       }
     });

@@ -205,6 +205,18 @@ var Sorter = function(editorId) {
     })
   }
   
+  this.getSprintNumber = function() {
+    var sprintNumber;
+    $(this.editor).find('li').each(function() {
+      var li_text = $(this).clone().children('ul').remove().end().html();
+      if (li_text.includes('#current_sprint')) {
+         sprintNumber = (/#sprint(\d+)/g).exec(li_text)[1];
+         return false; //break loop
+      }
+    })
+    return sprintNumber;
+  }
+  
   this.getTagAndParents = function(hashtags) {
     var self = this
     var hashtags = hashtags.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')

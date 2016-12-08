@@ -41,6 +41,11 @@ There is a default notebook called `home`, all notebooks has a prefix: sorter_no
 
 Also you can add @my_notebook to your notes and when clicked it will redirect to the notebook called my_notebook
 
+##### Shortcuts
+
+- `ctrl+alt+c` : add the $complete tag to the current tag and removes the #task and $todo tags
+- `ctrl+alt+s` : add #current_sprint and #sprint2 to the current note, when current sprint is 2
+
 ##Installation
 
 ```

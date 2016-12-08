@@ -110,6 +110,11 @@ describe('Sorter', function() {
     expect(countHashtag('#current_sprint')).to.be.eq(1) 
   })
 
+  it('get current_sprint number', function() {
+    var sprintNumber = sorter.getSprintNumber();
+    expect(sprintNumber).to.be.eq('2') 
+  })
+  
   xit('get hashtags and parents in text [currently not used]', function() {
     $('#editor').remove()
     var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #task</li><li> child2 #hash2 <ul> <li>grandchild1 #task</li><li>grandchild2 $completed</li></ul> </li></ul> </li></ul></div>');
