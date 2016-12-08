@@ -76,7 +76,7 @@ var Sorter = function(editorId) {
   this.parseNotebookTags = function() {
     var initText = $(this.editor).html()
   
-    var parsedText = initText.replace(/\@(\w+)\b(?!<\/a>)/g, function (match, notebook) {
+    var parsedText = initText.replace(/\ @(\w+)\b(?!<\/a>)/g, function (match, notebook) {
       var dataId = $('#notebooks  .notebook_link:contains("'+notebook+'")').data('id');
       var newLink = $("<a />", {
           href : "#",

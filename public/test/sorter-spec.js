@@ -2,7 +2,7 @@ var  expect = chai.expect
 
 describe('Sorter', function() {
   before(function() { 
-    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1 #sprint1 open @notebook1</li><li> child2 #hash2 #sprint2<ul> <li>grandchild1</li><li>grandchild2 $completed @notebook2</li></ul> </li></ul> </li></ul></div>');
+    var editor = $('<div id="editor"> <ul> <li> root <ul> <li>child1 #hash1 #sprint1 open @notebook1 mail@mail.com a.com/@this/hello</li><li> child2 #hash2 #sprint2<ul> <li>grandchild1</li><li>grandchild2 $completed @notebook2</li></ul> </li></ul> </li></ul></div>');
     var allTags = $('<div id="allTags"></div>')
     var sprints = $('<div id="sprints"></div>')
     $('body').append(editor).append(allTags).append(sprints)
