@@ -1,12 +1,12 @@
 ul,
 li {
   padding: 0;
-  margin: 0 5px;
   list-style: none;
+  background-color: #fcfcfc; 
 }
 
 li {
-  margin-left: 1em;
+  margin: 0 0 0 1em;
 }
 
 li:before {
@@ -34,4 +34,11 @@ li.journal:before {
 
 li.todo:before {
   color: #ffeb3b;
+}
+
+li.filtered {
+  background-color: rgba(0,0,0,0.075);
+}
+li:not(.filtered) { 
+  background-color: #fcfcfc; 
 }

@@ -23,11 +23,14 @@ var Sorter = function(editorId) {
                 return '(?=.*'+e+')'
               }).join("")
     }
-
+    $(this.editor).find('.filtered').removeClass('filtered')
     $(this.editor).find('li').hide()
     $(this.editor).find('li').each(function() {
       var li_text = $(this).clone().children('ul').remove().end().html();
       if (new RegExp(regex).test(li_text)) {
+        if (current_text !='') {
+          $(this).addClass('filtered');
+        }
         $(this).show()
         $(this).parents().show()
         $(this).find('li').show()
