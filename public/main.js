@@ -71,7 +71,7 @@ var App = function() {
         'autolink lists link save autoresize'
       ],
       save_enablewhendirty: true,
-      save_onsavecallback: function () { app.saveBookmark(); app.parseText(); app.applyStyles(); app.saveNotes(); app.loadBookmark(); },
+      save_onsavecallback: function () { app.sorter.removeJunk(); app.saveBookmark(); app.parseText(); app.applyStyles(); app.saveNotes(); app.loadBookmark(); },
       toolbar: 'bullist save removeformat',
       setup : function(ed){
         ed.on('init', function() {

@@ -223,6 +223,19 @@ var Sorter = function(editorId) {
     return sprintNumber;
   }
   
+  this.removeJunk = function() {
+    $(this.editor).find('ul, li').each(function(){
+      if ($(this).attr('class') == "") {
+        $(this).removeAttr('class');
+      }
+      if ($(this).attr('style') == "") {
+        $(this).removeAttr('style');
+      }
+    })
+    $(this.editor).find('[data-mce-href]').removeAttr('data-mce-href')
+    $(this.editor).find('[data-mce-style]').removeAttr('data-mce-style')
+  }
+
   this.getTagAndParents = function(hashtags) {
     var self = this
     var hashtags = hashtags.replace(/  +/g, ' ').replace(/\$/g, '\\$').split(' ')
