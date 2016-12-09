@@ -78,6 +78,23 @@ var App = function() {
           this.getDoc().body.style.fontSize = '14px';
           app.tinyDom = tinyMCE.activeEditor.dom.getRoot()
           app.sorter = new Sorter(app.tinyDom);
+          $(app.tinyDom).on('click', 'li', function(e){
+            e.stopPropagation();
+            if (e.altKey) { 
+              if ($(this).hasClass('leaf')) {
+                return false;
+              }
+              if ($(this).hasClass('closed-icon')) {
+                $(this).removeClass('closed-icon');
+                $(this).find('ul').show();
+              } else {
+                $(this).addClass('closed-icon');
+                $(this).find('ul').hide();
+              }
+
+            }
+          })
+
           $(app.tinyDom).on('click', '.hash_link, a.smartTag', function(){
             app.filterBox(this)
           }) 
@@ -94,13 +111,13 @@ var App = function() {
             var fKey = 70 == e.keyCode;
             var node = ed.selection.getNode()
             var sprintNumber = app.sorter.getSprintNumber();
-            if (e.altKey && e.ctrlKey && fKey ) {
+            if (e.altKey && e.ctrlKey && fKey ) { //focus on filter
               $('#filter_box').focus();
             }
-            if (e.altKey && e.ctrlKey && cKey ) {
+            if (e.altKey && e.ctrlKey && cKey ) { //complete tasks
               $(node).find('a:contains("#task"), a:contains("$todo")').replaceWith( "$completed" )
             }
-            if (e.altKey && e.ctrlKey && sKey) {
+            if (e.altKey && e.ctrlKey && sKey) { //add current sprint
               if ($(node).find('ul')[0]) { //it has childrens
                 $(node).find('ul')[0].before(' #current_sprint #sprint'+sprintNumber+' ')
               } else {
@@ -239,7 +256,17 @@ var App = function() {
       $(this).addClass('leaf');
     })
   }
+  
+  this.expand_notes = function() {
+    $(this.tinyDom).find('.closed-icon ul').show();
+    $(this.tinyDom).find('.closed-icon').removeClass('closed-icon');
+  }
 
+  this.collapse_notes = function() {
+    $(this.tinyDom).children('ul').children().addClass('closed-icon');
+    $(this.tinyDom).children('ul').children().find('ul').hide();    
+  }
+  
   this.loadTaskView = function() {
     var tasks = this.sorter.getTagAndParents('#task')
     var todos = this.sorter.getTagAndParents('$todo')

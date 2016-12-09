@@ -35,6 +35,8 @@
               </div>
               <div class="panel-body panel-small">
                 <a class="filter_clear"  href="#">Clear</a><br/>
+                <a onclick="expand_notes()"  href="#">expand all</a>/<a onclick="collapse_notes()"  href="#">collapse all</a><br/>
+
                 <br/>
                 <a class="bookmark_link" data-name="todo" href="#">$todo</a> <br/>
                 <a class="bookmark_link" data-name="task" href="#">#task</a><br/>
@@ -180,6 +182,13 @@
         app.moveToSprint(nextSprint);
       }
 
+      function expand_notes() {
+        app.expand_notes();
+      }
+
+      function collapse_notes() {
+        app.collapse_notes();
+      }
     </script>
     <script src="https://apis.google.com/js/api.js?onload=initGapi"></script>
   </body>

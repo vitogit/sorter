@@ -41,6 +41,9 @@ var Sorter = function(editorId) {
         $(this).find('li').hide()
       }
     })
+    if (current_text == '') {
+      $(this.editor).find('.closed-icon ul').hide()
+    }
   }
 
   this.parseHashtags = function() {

@@ -36,6 +36,14 @@ li.todo:before {
   color: #ffeb3b;
 }
 
+li.closed-icon ul {
+  display:none;
+}
+
+li.closed-icon:before {
+  content: '▸';
+}
+
 li.filtered {
   background-color: rgba(0,0,0,0.075);
 }
