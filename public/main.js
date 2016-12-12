@@ -68,11 +68,16 @@ var App = function() {
       menubar:false,
       content_css : './assets/css/simplex.bootstrap.min.css, ./assets/css/editor.css',
       plugins: [
-        'autolink lists link save autoresize'
+        'autolink lists link save autoresize codesample'
       ],
       save_enablewhendirty: true,
       save_onsavecallback: function () { app.sorter.removeJunk(); app.saveBookmark(); app.parseText(); app.applyStyles(); app.saveNotes(); app.loadBookmark(); },
-      toolbar: 'bullist save removeformat',
+      toolbar: 'bullist save removeformat codesample',
+      codesample_languages: [
+            {text: 'JavaScript', value: 'javascript'},
+            {text: 'Ruby', value: 'ruby'},
+            {text: 'HTML/XML', value: 'markup'},
+        ],      
       setup : function(ed){
         ed.on('init', function() {
           this.getDoc().body.style.fontSize = '14px';
