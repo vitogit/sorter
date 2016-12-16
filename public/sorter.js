@@ -225,10 +225,10 @@ var Sorter = function(editorId) {
   
   this.removeJunk = function() {
     $(this.editor).find('ul, li').each(function(){
-      if ($(this).attr('class') == "") {
+      if (!$(this).attr('class')) {
         $(this).removeAttr('class');
       }
-      if ($(this).attr('style') == "") {
+      if (!$(this).attr('style')) {
         $(this).removeAttr('style');
       }
     })
