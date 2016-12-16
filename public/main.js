@@ -70,8 +70,7 @@ var App = function() {
       plugins: [
         'autolink lists link save autoresize codesample'
       ],
-      save_enablewhendirty: true,
-      save_onsavecallback: function () { app.sorter.removeJunk(); app.saveBookmark(); app.parseText(); app.applyStyles(); app.saveNotes(); app.loadBookmark(); },
+      save_onsavecallback: function () { app.saveCallback() },
       toolbar: 'bullist save removeformat codesample',
       codesample_languages: [
             {text: 'JavaScript', value: 'javascript'},
@@ -79,6 +78,12 @@ var App = function() {
             {text: 'HTML/XML', value: 'markup'},
         ],      
       setup : function(ed){
+        ed.on('SaveContent', function() {
+          app.sorter.removeJunk();
+          app.saveBookmark();
+          app.parseText();
+          app.applyStyles();
+        }),
         ed.on('init', function() {
           this.getDoc().body.style.fontSize = '14px';
           app.tinyDom = tinyMCE.activeEditor.dom.getRoot()
@@ -188,6 +193,10 @@ var App = function() {
     tinymce.activeEditor.selection.moveToBookmark(this.bookmark);
   }
   
+  this.saveCallback = function() {
+    app.saveNotes(); 
+    app.loadBookmark();
+  }
   
   this.newNotes = function(newFile, done) {
     driveService.saveFile(newFile, function(file){
