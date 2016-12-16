@@ -37,7 +37,7 @@ li.todo:before {
 }
 
 li.closed-icon ul {
-  display:none;
+  /*display:none;*/
 }
 
 li.closed-icon:before {
