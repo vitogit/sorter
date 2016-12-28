@@ -82,7 +82,10 @@ var App = function() {
         ed.on('keyup',function(e){
             if ( 13 === e.keyCode ) { //after enter 
               var currentElement = $(ed.selection.getNode()).closest('li')
-               currentElement.removeAttr('class'); //remove previous class
+              if ($(currentElement).hasClass('closed-icon')) {
+                currentElement.prev().append(currentElement.children('ul'))
+              }
+              currentElement.removeAttr('class'); //remove previous class
             }
         });
         ed.on('SaveContent', function() {
