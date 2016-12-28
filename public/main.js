@@ -66,6 +66,7 @@ var App = function() {
       height: '100%',
       statusbar: false,
       menubar:false,
+      keep_styles: false,
       content_css : './assets/css/simplex.bootstrap.min.css, ./assets/css/editor.css',
       plugins: [
         'autolink lists link save autoresize codesample'
@@ -78,6 +79,12 @@ var App = function() {
             {text: 'HTML/XML', value: 'markup'},
         ],      
       setup : function(ed){
+        ed.on('keyup',function(e){
+            if ( 13 === e.keyCode ) { //after enter 
+              var currentElement = $(ed.selection.getNode()).closest('li')
+               currentElement.removeAttr('class'); //remove previous class
+            }
+        });
         ed.on('SaveContent', function() {
           app.sorter.removeJunk();
           app.saveBookmark();
