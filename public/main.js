@@ -106,10 +106,10 @@ var App = function() {
               }
               if ($(this).hasClass('closed-icon')) {
                 $(this).removeClass('closed-icon');
-                $(this).find('ul').show();
+                $(this).children('ul').show();
               } else {
                 $(this).addClass('closed-icon');
-                $(this).find('ul').hide();
+                $(this).children('ul').hide();
               }
 
             }
