@@ -101,17 +101,7 @@ var App = function() {
           $(app.tinyDom).on('click', 'li', function(e){
             e.stopPropagation();
             if (e.altKey) { 
-              if ($(this).hasClass('leaf')) {
-                return false;
-              }
-              if ($(this).hasClass('closed-icon')) {
-                $(this).removeClass('closed-icon');
-                $(this).children('ul').show();
-              } else {
-                $(this).addClass('closed-icon');
-                $(this).children('ul').hide();
-              }
-
+              app.toggleNote(this)
             }
           })
 
@@ -149,7 +139,18 @@ var App = function() {
       }
     });
   }
-
+  this.toggleNote = function(el) {
+    if ($(el).hasClass('leaf')) {
+      return false;
+    }
+    if ($(el).hasClass('closed-icon')) {
+      $(el).removeClass('closed-icon');
+      $(el).children('ul').show();
+    } else {
+      $(el).addClass('closed-icon');
+      $(el).children('ul').hide();
+    }    
+  }
   this.filterBox = function(s) {
     var type = $(s).text()[0];
     var hashtag =  type+$(s).data('name')
@@ -282,13 +283,13 @@ var App = function() {
   }
   
   this.expand_notes = function() {
-    $(this.tinyDom).find('.closed-icon ul').show();
-    $(this.tinyDom).find('.closed-icon').removeClass('closed-icon');
+    $(this.tinyDom).children('ul').children().removeClass('closed-icon');
+    $(this.tinyDom).children('ul').children().children('ul').show();
   }
 
   this.collapse_notes = function() {
     $(this.tinyDom).children('ul').children().addClass('closed-icon');
-    $(this.tinyDom).children('ul').children().find('ul').hide();    
+    $(this.tinyDom).children('ul').children().children('ul').hide();
   }
   
   this.loadTaskView = function() {
