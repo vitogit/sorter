@@ -42,7 +42,7 @@ var Sorter = function(editorId) {
       }
     })
     if (current_text == '') {
-      $(this.editor).find('.closed-icon ul').hide()
+      $(this.editor).find('.closed-icon').children('ul').hide()
     }
   }
 
