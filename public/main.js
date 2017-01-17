@@ -5,6 +5,7 @@ var App = function() {
   this.sorter;
   
   this.tinyDom;
+  this.tempNote;
   
   this.init = function() {
 
@@ -119,8 +120,27 @@ var App = function() {
             var cKey = 67 == e.keyCode;
             var sKey = 83 == e.keyCode;
             var fKey = 70 == e.keyCode;
+            var xKey = 88 == e.keyCode;
+            var vKey = 86 == e.keyCode;
             var node = ed.selection.getNode()
             var sprintNumber = app.sorter.getSprintNumber();
+            if (e.altKey && e.ctrlKey && xKey ) { //cut note
+              if ($(node).is('li')) {
+                app.tempNote = $(node);
+              } else {
+                app.tempNote = $(node).parent('li');
+              }
+            }    
+            if (e.altKey && e.ctrlKey && vKey ) { //paste note
+              if ($(node).children('ul').length == 0 ) {
+                $(node).append('<ul>');
+              }
+              if ($(node).is('li')) {
+                $(node).children('ul').append(app.tempNote);
+              } else {
+                $(node).parent('li').children('ul').append(app.tempNote);
+              }
+            }
             if (e.altKey && e.ctrlKey && fKey ) { //focus on filter
               $('#filter_box').focus();
             }
