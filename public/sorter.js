@@ -27,7 +27,7 @@ var Sorter = function(editorId) {
     $(this.editor).find('li').hide()
     $(this.editor).find('li').each(function() {
       var li_text = $(this).clone().children('ul').remove().end().html();
-      if (new RegExp(regex).test(li_text)) {
+      if (new RegExp(regex,'i').test(li_text)) {
         if (current_text !='') {
           $(this).addClass('filtered');
         }
@@ -36,7 +36,7 @@ var Sorter = function(editorId) {
         $(this).find('li').show()
       }
 
-      if (tagsToHide.length && new RegExp(tagsToHide.join("|")).test(li_text)) {
+      if (tagsToHide.length && new RegExp(tagsToHide.join("|"), 'i').test(li_text)) {
         $(this).hide()
         $(this).find('li').hide()
       }
@@ -244,7 +244,7 @@ var Sorter = function(editorId) {
     $(this.editor).find('li').each(function() {
       var li_text = $(this).clone().children('ul').remove().end().text();
       //filter using OR
-      if (new RegExp(hashtags.join("|")).test(li_text)) {
+      if (new RegExp(hashtags.join("|"), 'i').test(li_text)) {
         var fullTag = li_text;
         var lis = $(this).parents('li').each(function() {
           var parentText = $(this).clone().children('ul').remove().end().text();
