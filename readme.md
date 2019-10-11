@@ -5,10 +5,10 @@ Sorter is a webapp to organize ideas, tasks and information using bullet points 
 ## How it works
 
 #### Write your notes following a hierarchy with bullets points 
-![Sorter in action](http://i64.tinypic.com/2lk7lfk.png)
+![Sorter in action](https://user-images.githubusercontent.com/5280619/66678930-5dab9280-ec43-11e9-833f-e87dbbcfbd15.png)
 
 #### Add hashtags to your notes and filter by hashtags or words to just focus on what you need
-![Sorter with tags](http://i66.tinypic.com/2ccplbs.png)
+![Sorter with tags](https://user-images.githubusercontent.com/5280619/66678925-5ab0a200-ec43-11e9-8d21-aee7658b1084.png)
 
 If you write `&` anywhere in the filter it will perform an AND filter: 
 `ex: & #task $todo it will search notes that have both hashtags.`
